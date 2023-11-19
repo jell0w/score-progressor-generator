@@ -12,10 +12,11 @@
 
     <v-app-bar app clipped-right flat height="72">
       <div>
-
+        <v-switch v-model="drawer" inset :label="`侧边`"></v-switch>
       </div>
 
       <v-slide-group v-model="selectedShowingIndex" multiple show-arrows>
+        
         <v-slide-item v-for="h in headers" :key="h" v-slot="{ active, toggle }">
           <v-btn class="mx-1" :input-value="active" active-class="purple white--text" depressed rounded @click="toggle">
             {{ h }}
@@ -194,7 +195,7 @@ let maxChart,
 export default {
   data: () => ({
     selectedShowingIndex: [],
-    drawer: null,
+    drawer: true,
     nameKey: "姓名",
     stuNumKey: "学号",
     excels: [],
@@ -505,7 +506,7 @@ export default {
       this.selectedShowingIndex.forEach((index) => {
         subjectHeaders.push(this.headers[index]);
       });
-      if (!avgradarchart||this.selectedShowingIndex.length==0) {
+      if (!avgradarchart || this.selectedShowingIndex.length == 0) {
         return [];
       }
       let indicator = subjectHeaders.map((sh) => {
@@ -633,7 +634,7 @@ export default {
   methods: {
     excelMove(index, up = 1) {
       //up=0表示上移，up=1表示下移,-1表示删除
-      if (up===1) {
+      if (up === 1) {
         if (index < this.excels.length - 1) {
           let tmp = this.excels[index];
           this.excels[index] = this.excels[index + 1];
@@ -642,8 +643,7 @@ export default {
           this.$forceUpdate();
           console.log("down", this.excels);
         }
-      } else if (up===0)
-       {
+      } else if (up === 0) {
         if (index > 0) {
           let tmp = this.excels[index];
           this.excels[index] = this.excels[index - 1];
@@ -652,10 +652,8 @@ export default {
           this.$forceUpdate();
           console.log("up", this.excels);
         }
-      }
-      else if (up===-1)
-      {
-        this.excels.splice(index,1);
+      } else if (up === -1) {
+        this.excels.splice(index, 1);
         this.selectedShowingIndex = [];
         this.$forceUpdate();
         console.log("delete", this.excels);
@@ -720,17 +718,20 @@ export default {
         reader.readAsBinaryString(file);
         reader.onload = (evt) => {
           const data = evt.target.result;
-          const workbook = XLXS.read(data, { type: "binary", sheetStubs: true });
+          const workbook = XLXS.read(data, {
+            type: "binary",
+            sheetStubs: true,
+          });
           const wsname = workbook.SheetNames[0];
           const ws = workbook.Sheets[wsname];
           // const dataParse = XLXS.utils.sheet_to_json(ws);
           const exceldata = XLXS.utils.sheet_to_json(ws, { header: 1 });
           const header = exceldata.shift();
           // console.log({ filename, header, exceldata });
-          this.excels.push({ filename:file.name, header, exceldata });
+          this.excels.push({ filename: file.name, header, exceldata });
         };
       }
-      
+
       // const filename = e.target.files[0].name;
       // const file = e.target.files[0];
       // const reader = new FileReader();
