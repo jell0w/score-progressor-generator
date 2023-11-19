@@ -1,5 +1,9 @@
 <template>
-  <HelloWorld/>
+  <v-app>
+    <v-main>
+      <HelloWorld/>
+    </v-main>
+  </v-app>
   <!-- <v-app>
     <v-app-bar
       app

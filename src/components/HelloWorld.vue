@@ -10,7 +10,7 @@
       <v-icon>mdi-triangle</v-icon>
     </v-system-bar> -->
 
-    <v-app-bar app clipped-right flat height="72" style="overflow: hidden;width: 100%;position: relative;justify-content: center;">
+    <v-app-bar app clipped-right flat height="72" style="overflow: hidden;width: 100%;justify-content: center;">
 
       <div style="width: 60px;display: flex;justify-content: center;align-items: center;height: fit-content;">
           <v-switch v-model="drawer" inset messages="文件侧栏"></v-switch>
