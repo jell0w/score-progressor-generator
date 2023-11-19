@@ -13,16 +13,16 @@
     <v-app-bar app clipped-right flat height="72" style="overflow: hidden;width: 100%;justify-content: center;">
 
       <div style="width: 60px;display: flex;justify-content: center;align-items: center;height: fit-content;">
-          <v-switch v-model="drawer" inset messages="文件侧栏"></v-switch>
-        </div>
-        <v-slide-group style="flex: 1;overflow: hidden;" v-model="selectedShowingIndex" multiple show-arrows>
+        <v-switch v-model="drawer" inset messages="文件侧栏"></v-switch>
+      </div>
+      <v-slide-group style="flex: 1;overflow: hidden;" v-model="selectedShowingIndex" multiple show-arrows>
 
-          <v-slide-item v-for="h in headers" :key="h" v-slot="{ active, toggle }">
-            <v-btn class="mx-1" :input-value="active" active-class="purple white--text" depressed rounded @click="toggle">
-              {{ h }}
-            </v-btn>
-          </v-slide-item>
-        </v-slide-group>
+        <v-slide-item v-for="h in headers" :key="h" v-slot="{ active, toggle }">
+          <v-btn class="mx-1" :input-value="active" active-class="purple white--text" depressed rounded @click="toggle">
+            {{ h }}
+          </v-btn>
+        </v-slide-item>
+      </v-slide-group>
 
       <!-- <v-spacer></v-spacer>
 
@@ -88,7 +88,7 @@
       </v-list>
     </v-navigation-drawer> -->
 
-    <v-main style="padding: 0;margin: 0;">
+    <v-main style="padding: 0;margin: 0;" @resize="mainresize">
       <!--  -->
       <!-- <div style="display: none;">{{ maxScore }}</div> -->
       <div v-show="selectedShowingIndex.length != 0">
@@ -759,6 +759,27 @@ export default {
     minchart = echarts.init(document.getElementById("minchart"));
     avgchart = echarts.init(document.getElementById("avgchart"));
     avgradarchart = echarts.init(document.getElementById("avgradar"));
+    let resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        console.log("Size changed:", entry.contentRect);
+        if (maxChart) {
+          maxChart.resize({ width: entry.contentRect.width});
+        }
+        if (minchart) {
+          minchart.resize({ width: entry.contentRect.width});
+        }
+        if (avgchart) {
+          avgchart.resize({ width: entry.contentRect.width});
+        }
+        if (avgradarchart) {
+          avgradarchart.resize({ width: entry.contentRect.width});
+        }
+      }
+    });
+
+    // 监听一个元素的尺寸变化
+    let element = document.querySelector("main");
+    resizeObserver.observe(element);
     // this.maxScore();
   },
 };
@@ -769,4 +790,5 @@ export default {
   height: 400px;
   margin-top: 100px;
 }
+
 </style>
