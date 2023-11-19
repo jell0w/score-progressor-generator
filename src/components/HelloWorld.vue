@@ -75,6 +75,12 @@
           </v-btn>
         </v-list-item>
 
+        <h6 style="margin: 10px 20px;">设置</h6>
+        <!-- 输入自定义图表高度，不允许低于400px -->
+        <v-list-item>
+          <v-text-field dense @input="chartHeightChange" v-model="chartHeight" hint="建议400-1200" type="number" min="400" label="图表高度" outlined></v-text-field>
+        </v-list-item>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -88,7 +94,7 @@
       </v-list>
     </v-navigation-drawer> -->
 
-    <v-main style="padding: 0;margin: 0;" @resize="mainresize">
+    <v-main style="padding: 0;margin: 0;">
       <!--  -->
       <!-- <div style="display: none;">{{ maxScore }}</div> -->
       <div v-show="selectedShowingIndex.length != 0">
@@ -199,6 +205,7 @@ export default {
     nameKey: "姓名",
     stuNumKey: "学号",
     excels: [],
+    chartHeight:400
   }),
   computed: {
     headers() {
@@ -632,6 +639,9 @@ export default {
     },
   },
   methods: {
+    chartHeightChange(e){
+      this.onMainResize([])
+    },
     excelMove(index, up = 1) {
       //up=0表示上移，up=1表示下移,-1表示删除
       if (up === 1) {
@@ -753,13 +763,7 @@ export default {
       //   */
       // };
     },
-  },
-  mounted() {
-    maxChart = echarts.init(document.getElementById("maxchart"));
-    minchart = echarts.init(document.getElementById("minchart"));
-    avgchart = echarts.init(document.getElementById("avgchart"));
-    avgradarchart = echarts.init(document.getElementById("avgradar"));
-    let resizeObserver = new ResizeObserver((entries) => {
+    onMainResize(entries) {
       for (let entry of entries) {
         console.log("Size changed:", entry.contentRect);
         if (maxChart) {
@@ -775,6 +779,28 @@ export default {
           avgradarchart.resize({ width: entry.contentRect.width});
         }
       }
+      if (maxChart) {
+          maxChart.resize({ height: this.chartHeight+"px"});
+        }
+        if (minchart) {
+          minchart.resize({ height: this.chartHeight+"px"});
+        }
+        if (avgchart) {
+          avgchart.resize({ height: this.chartHeight+"px"});
+        }
+        if (avgradarchart) {
+          avgradarchart.resize({ height: this.chartHeight+"px"});
+        }
+    },
+  },
+  mounted() {
+    maxChart = echarts.init(document.getElementById("maxchart"));
+    minchart = echarts.init(document.getElementById("minchart"));
+    avgchart = echarts.init(document.getElementById("avgchart"));
+    avgradarchart = echarts.init(document.getElementById("avgradar"));
+    let that=this;
+    let resizeObserver = new ResizeObserver((entries) => {
+      that.onMainResize(entries);
     });
 
     // 监听一个元素的尺寸变化
@@ -786,8 +812,8 @@ export default {
 </script>
 <style scoped>
 .charts {
-  width: 900px;
-  height: 400px;
+  /* width: 900px;
+  height: 400px; */
   margin-top: 100px;
 }
 
