@@ -205,7 +205,7 @@ export default {
     nameKey: "姓名",
     stuNumKey: "学号",
     excels: [],
-    chartHeight:400
+    chartHeight: 400,
   }),
   computed: {
     headers() {
@@ -470,7 +470,14 @@ export default {
         // Declare several bar series, each will be mapped
         // to a column of dataset.source by default.
         series: avgScore.map((item) => {
-          return { type: "bar" };
+          return {
+            type: "bar",
+            label: {
+              // 添加此部分
+              show: true,
+              position: "top",
+            },
+          };
         }),
         // [{ type: "bar" }, { type: "bar" }, { type: "bar" }],
       };
@@ -639,8 +646,8 @@ export default {
     },
   },
   methods: {
-    chartHeightChange(e){
-      this.onMainResize([])
+    chartHeightChange(e) {
+      this.onMainResize([]);
     },
     excelMove(index, up = 1) {
       //up=0表示上移，up=1表示下移,-1表示删除
@@ -767,30 +774,30 @@ export default {
       for (let entry of entries) {
         console.log("Size changed:", entry.contentRect);
         if (maxChart) {
-          maxChart.resize({ width: entry.contentRect.width});
+          maxChart.resize({ width: entry.contentRect.width });
         }
         if (minchart) {
-          minchart.resize({ width: entry.contentRect.width});
+          minchart.resize({ width: entry.contentRect.width });
         }
         if (avgchart) {
-          avgchart.resize({ width: entry.contentRect.width});
+          avgchart.resize({ width: entry.contentRect.width });
         }
         if (avgradarchart) {
-          avgradarchart.resize({ width: entry.contentRect.width});
+          avgradarchart.resize({ width: entry.contentRect.width });
         }
       }
       if (maxChart) {
-          maxChart.resize({ height: this.chartHeight+"px"});
-        }
-        if (minchart) {
-          minchart.resize({ height: this.chartHeight+"px"});
-        }
-        if (avgchart) {
-          avgchart.resize({ height: this.chartHeight+"px"});
-        }
-        if (avgradarchart) {
-          avgradarchart.resize({ height: this.chartHeight+"px"});
-        }
+        maxChart.resize({ height: this.chartHeight + "px" });
+      }
+      if (minchart) {
+        minchart.resize({ height: this.chartHeight + "px" });
+      }
+      if (avgchart) {
+        avgchart.resize({ height: this.chartHeight + "px" });
+      }
+      if (avgradarchart) {
+        avgradarchart.resize({ height: this.chartHeight + "px" });
+      }
     },
   },
   mounted() {
@@ -798,7 +805,7 @@ export default {
     minchart = echarts.init(document.getElementById("minchart"));
     avgchart = echarts.init(document.getElementById("avgchart"));
     avgradarchart = echarts.init(document.getElementById("avgradar"));
-    let that=this;
+    let that = this;
     let resizeObserver = new ResizeObserver((entries) => {
       that.onMainResize(entries);
     });
@@ -816,5 +823,4 @@ export default {
   height: 400px; */
   margin-top: 100px;
 }
-
 </style>
