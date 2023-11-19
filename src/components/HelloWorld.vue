@@ -92,7 +92,7 @@
       <!--  -->
       <!-- <div style="display: none;">{{ maxScore }}</div> -->
       <div v-show="selectedShowingIndex.length != 0">
-        <div id="maxchart" style="width: 1200px;height:600px;"></div>
+        <div class="charts" id="maxchart"></div>
         <v-simple-table v-if="maxScore.length!=0">
           <template v-slot:default>
             <thead>
@@ -114,7 +114,7 @@
           </template>
         </v-simple-table>
         <hr>
-        <div id="minchart" style="width: 1200px;height:600px;margin-top: 100px;"></div>
+        <div class="charts" id="minchart" style="margin-top: 100px;"></div>
         <v-simple-table v-if="maxScore.length!=0">
           <template v-slot:default>
             <thead>
@@ -137,7 +137,7 @@
         </v-simple-table>
 
         <hr>
-        <div id="avgchart" style="width: 1200px;height:600px;margin-top: 100px;"></div>
+        <div class="charts" id="avgchart" style="margin-top: 100px;"></div>
         <v-simple-table v-if="avgScore.length!=0">
           <template v-slot:default>
             <thead>
@@ -161,7 +161,7 @@
       </div>
 
       <hr>
-      <div id="avgradar" style="width: 1200px;height:600px;margin-top: 100px;"></div>
+      <div class="charts" id="avgradar" style="margin-top: 100px;"></div>
       <div style="display: none;">{{ avgRadar }}</div>
 
     </v-main>
@@ -763,3 +763,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.charts {
+  width: 900px;
+  height: 400px;
+  margin-top: 100px;
+}
+</style>
