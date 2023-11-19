@@ -10,19 +10,19 @@
       <v-icon>mdi-triangle</v-icon>
     </v-system-bar> -->
 
-    <v-app-bar app clipped-right flat height="72">
-      <div>
-        <v-switch v-model="drawer" inset :label="`侧边`"></v-switch>
-      </div>
+    <v-app-bar app clipped-right flat height="72" style="overflow: hidden;width: 100%;position: relative;justify-content: center;">
 
-      <v-slide-group v-model="selectedShowingIndex" multiple show-arrows>
-        
-        <v-slide-item v-for="h in headers" :key="h" v-slot="{ active, toggle }">
-          <v-btn class="mx-1" :input-value="active" active-class="purple white--text" depressed rounded @click="toggle">
-            {{ h }}
-          </v-btn>
-        </v-slide-item>
-      </v-slide-group>
+      <div style="width: 60px;display: flex;justify-content: center;align-items: center;height: fit-content;">
+          <v-switch v-model="drawer" inset messages="文件侧栏"></v-switch>
+        </div>
+        <v-slide-group style="flex: 1;overflow: hidden;" v-model="selectedShowingIndex" multiple show-arrows>
+
+          <v-slide-item v-for="h in headers" :key="h" v-slot="{ active, toggle }">
+            <v-btn class="mx-1" :input-value="active" active-class="purple white--text" depressed rounded @click="toggle">
+              {{ h }}
+            </v-btn>
+          </v-slide-item>
+        </v-slide-group>
 
       <!-- <v-spacer></v-spacer>
 

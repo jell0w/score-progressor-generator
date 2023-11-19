@@ -1,5 +1,6 @@
 <template>
-  <v-app>
+  <HelloWorld/>
+  <!-- <v-app>
     <v-app-bar
       app
       color="primary"
@@ -40,7 +41,7 @@
     <v-main>
       <HelloWorld/>
     </v-main>
-  </v-app>
+  </v-app> -->
 </template>
 
 <script>
